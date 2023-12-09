@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 In this vignette, I will analyze a dataset about estimated salary for college students. The goal here is to demonstrate the functions from the R package `bbplot` and wrangle and plot the example data from TidyTuesday.
 
-* Question: How does the early career pay differ across the U.S.?
+* Question: How does the early career pay differ across the U.S.? What is the relationship between early career pay and mid career pay? What is the relationship between early career pay and STEM percent of student body?
 
 * Audience: R package `bbplot` users who are interested in seeing example data wrangling and visualizations.
 
@@ -140,6 +140,7 @@ pay_trend_plot <- pay_trend %>%
   labs(title = str_wrap("The Association Between Average Estimated Early Career Salary and Mid Career Salary by State", 30), subtitle = str_wrap("A higher early career salary is associated with a higher mid career salary", 40), x = "average early career salary", y = "average mid career salary", caption = "Yuhan Xiao") +
   bbc_style() 
 
+# save the plot to local folder
 finalise_plot(plot_name = pay_trend_plot,
   source = "Source: TidyTuesday",
   save_filepath = here("data","pay_trend-nc.png"),
