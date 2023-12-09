@@ -27,7 +27,7 @@ Description of the 5 customized things in this pkgdown website:
 <!-- badges: end -->
 
 Original author: Nassos Stylianou, Clara Guibourg, Will Dahlgreen,
-Robert Cuffe, Tom. Calver, Ransome Mpini.
+Robert Cuffe, Tom Calver, Ransome Mpini.
 
 This repo contains the functions of the `bbplot` package, which once
 installed locally, provides helpful functions for creating and exporting
