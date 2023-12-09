@@ -62,16 +62,23 @@ load(here("data", "salary_potential.rda"))
 
 #### Step 3: data wrangling
 ```{r}
+# check the content of the data set
+head(salary_potential)
+map_chr(salary_potential, .f = typeof)
+map_int(salary_potential, .f = ~ length(unique(.x)))
+```
+
+```{r}
 # calculate the average estimated early career pay
 salary_st_avg <- salary_potential %>%
   select(name, state_name, early_career_pay) %>%
-  group_by(state_name) %>%
+  rename(region = state_name) %>%
+  mutate(region = tolower(region)) %>%
+  group_by(region) %>%
   summarise(
     avg_early_career_pay = mean(early_career_pay)
-  ) %>%
-  rename(region = state_name) %>%
-  mutate(region = tolower(region))
-
+  )
+  
 # find coordinates for us states
 us_map <- map_data("state") %>%
   mutate(region = gsub(" ", "-", region))
@@ -82,6 +89,33 @@ map_salary_st_avg <- us_map %>%
 ```
 
 ```{r}
+# select salary info from states of interest
+salary <- salary_potential %>%
+  select(state_name, early_career_pay, mid_career_pay) %>%
+  rename(state = state_name) %>%
+  mutate(state = tolower(state)) 
+
+# break the data set down into groups defined by states
+by_state <- split(salary, salary$state)
+
+# calculate average early pay and mid pay for each state
+early_pay <- map_dbl(by_state, ~ mean(.x$early_career_pay, na.rm=TRUE))
+mid_pay <- map_dbl(by_state, ~ mean(.x$mid_career_pay, na.rm=TRUE))
+
+# combine average pay into a table
+pay_trend <- tibble(
+  state = names(early_pay),
+  avg_early_pay = early_pay,
+  avg_mid_pay = mid_pay
+)
+```
+
+```{r}
+# select salary info from states of interest
+pay_stem_trend <- salary_potential %>%
+  rename(state = state_name) %>%
+  mutate(state = tolower(state)) %>%
+  filter(state %in% c("california", "michigan", "maryland", "washington"))
 ```
 
 #### Step 4: data visualization
@@ -98,11 +132,48 @@ map_salary_st_avg %>% ggplot() +
         text = element_text(family = "Times"))
 ```
 
+```{r fig.dim = c(8,6)}
+# plot the association between average early career pay to average mid career pay
+pay_trend_plot <- pay_trend %>% 
+  ggplot() +
+  geom_point(aes(x = avg_early_pay, y = avg_mid_pay)) +
+  labs(title = str_wrap("The Association Between Average Estimated Early Career Salary and Mid Career Salary by State", 30), subtitle = str_wrap("A higher early career salary is associated with a higher mid career salary", 40), x = "average early career salary", y = "average mid career salary", caption = "Yuhan Xiao") +
+  bbc_style() 
+
+finalise_plot(plot_name = pay_trend_plot,
+  source = "Source: TidyTuesday",
+  save_filepath = here("data","pay_trend-nc.png"),
+  width_pixels = 640,
+  height_pixels = 550,
+  logo_image_path = here("data","placeholder.png"))
+```
+
+::: {.callout-note}
+* Note: I have added captions and axis labels. This plot, however, does not show these components because it follows the BBC style.
+:::
+
+```{r warning = F, message = F, fig.dim = c(8,6)}
+pay_stem_trend %>% ggplot(aes(x=stem_percent, y = early_career_pay, color = state)) +
+  geom_point() +
+  geom_smooth() + 
+  facet_wrap(~state, nrow = 2) +
+  labs(title = str_wrap("The Association Between Average Estimated Early Career Salary and Percent of STEM students by State", 60), subtitle = str_wrap("A higher percent of student body in STEM is associated with a higher estimated early career salary", 60), x = "STEM percent", y = "average early career salary", caption = "Yuhan Xiao") +
+  theme_minimal(base_size = 14) +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 1, size = 15), 
+        plot.subtitle = element_text(hjust = 0.5),
+        axis.text.x = element_text(angle = 0, hjust = 1),
+        plot.background = element_rect(fill = "white"),
+        text = element_text(family = "Times"),
+        legend.position = "none")
+```
+
 ## Summary
+
+Colleges have higher estimated early career salary for students if they are located in California, Texas, the northeastern region or if they have a higher percent of student body in STEM. A higher early career salary is associated with a higher mid career salary.
 
 ## Functions
 -   `bbplot`: `bbc_style()`, `finalise_plot()`
--   `dplyr`: `select()`, `group_by()`, `summarise()`, `mutate()`, `rename()`
+-   `dplyr`: `select()`, `group_by()`, `summarise()`, `mutate()`, `rename()`, `filter()`
 -   `stringr`: `str_wrap()`
--   `purrr`: 
--   `ggplot2`: `geom_polygon()`, `facet_wrap()`
+-   `purrr`: `map_dbl()`, `map_chr()`, `map_int()`
+-   `ggplot2`: `geom_polygon()`, `geom_point()`, `geom_smooth()`, `facet_wrap()`

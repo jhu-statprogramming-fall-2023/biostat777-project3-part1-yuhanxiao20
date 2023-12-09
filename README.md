@@ -3,7 +3,10 @@
 
 ## Information
 
-Author: Yuhan Xiao (website and example data analysis)
+Author: Yuhan Xiao (website and example data analysis).
+
+Original author: Nassos Stylianou, Clara Guibourg, Will Dahlgreen,
+Robert Cuffe, Tom Calver, Ransome Mpini (package).
 
 URL to the GitHub link to where the original R package came from:
 <https://github.com/bbc/bbplot>.
@@ -25,9 +28,6 @@ Description of the 5 customized things in this pkgdown website:
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-Original author: Nassos Stylianou, Clara Guibourg, Will Dahlgreen,
-Robert Cuffe, Tom Calver, Ransome Mpini.
 
 This repo contains the functions of the `bbplot` package, which once
 installed locally, provides helpful functions for creating and exporting
