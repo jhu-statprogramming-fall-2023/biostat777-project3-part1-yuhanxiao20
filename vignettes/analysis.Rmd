@@ -37,6 +37,7 @@ library(readr)
 library(tidyverse)
 library(ggplot2)
 library(maps)
+library(purrr)
 ```
 
 #### Step 2: load data

@@ -26,3 +26,13 @@ LazyData: true
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Suggests: 
+    knitr,
+    rmarkdown,
+    ggplot2,
+    here,
+    readr,
+    tidyverse,
+    dplyr,
+    maps,
+    purrr
