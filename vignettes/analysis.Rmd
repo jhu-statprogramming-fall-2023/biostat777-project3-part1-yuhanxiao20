@@ -17,14 +17,91 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-In this vignette, I will analyze a dataset [XXX]. The goal here is to demonstrate the functions from the R package `bbplot` and wrangle and plot the example data from TidyTuesday.
+In this vignette, I will analyze a dataset about estimated salary for college students. The goal here is to demonstrate the functions from the R package `bbplot` and wrangle and plot the example data from TidyTuesday.
 
-* Question: 
+* Question: How does the early career pay differ across the U.S.?
 
 * Audience: R package `bbplot` users who are interested in seeing example data wrangling and visualizations.
 
-* Dataset: I obtained the original dataset from  [TidyTuesday]().
+* Dataset: I obtained the original dataset from  [TidyTuesday](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-03-10).
 
-* Data dictionary: I referred to this [data dictionary]() from TidyTuesday.
+* Data dictionary: I referred to this [data dictionary](https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-03-10#data-dictionary) from TidyTuesday.
 
 ## Data Analysis
+
+#### Step 1: load packages 
+```{r bg, message = FALSE, warning = FALSE}
+library(bbplot)
+library(here)
+library(readr)
+library(tidyverse)
+library(ggplot2)
+library(maps)
+```
+
+#### Step 2: load data
+```{r load, message = FALSE, warning = FALSE}
+# check if a directory named data exists locally
+if (!dir.exists(here("data"))) {
+  # if not, create it programmatically
+  dir.create(here("data"))
+}
+
+# check whether we have the input data
+if (!file.exists(here("data", "salary_potential.rda"))) {
+    # If we don't, then download the data
+    salary_potential <- read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv")
+
+    save(salary_potential, file = here("data", "salary_potential.rda"))
+}
+
+# load the data
+load(here("data", "salary_potential.rda"))
+```
+
+#### Step 3: data wrangling
+```{r}
+# calculate the average estimated early career pay
+salary_st_avg <- salary_potential %>%
+  select(name, state_name, early_career_pay) %>%
+  group_by(state_name) %>%
+  summarise(
+    avg_early_career_pay = mean(early_career_pay)
+  ) %>%
+  rename(region = state_name) %>%
+  mutate(region = tolower(region))
+
+# find coordinates for us states
+us_map <- map_data("state") %>%
+  mutate(region = gsub(" ", "-", region))
+
+# add salary info to the map
+map_salary_st_avg <- us_map %>%
+  left_join(salary_st_avg, by = join_by(region))
+```
+
+```{r}
+```
+
+#### Step 4: data visualization
+```{r fig.dim = c(8,6)}
+# plot the average estimated early career pay across the US
+map_salary_st_avg %>% ggplot() +
+  geom_polygon(aes(x = long, y = lat, group = group, fill = avg_early_career_pay)) +
+  scale_fill_gradient(low = "#FAAB18", high = "#1380A1") +  # Adjust the color scale
+  labs(title = "The Average Estimated Early Career Salary Across the U.S.", subtitle = str_wrap("California, Texas, and the states in the northeastern region have higher estimated early career pay compared to states in the central portion of the U.S.", 60), caption = "Yuhan Xiao", fill = "Salary") +
+  theme_void(base_size = 14) +
+  theme(plot.title = element_text(hjust = 0.5, vjust = 1, size = 15), 
+        plot.subtitle = element_text(hjust = 0.5),
+        plot.background = element_rect(fill = "white"),
+        text = element_text(family = "Times"))
+```
+
+## Summary
+
+## Functions
+-   `bbplot`: `bbc_style()`, `finalise_plot()`
+-   `dplyr`: `select()`, `group_by()`, `summarise()`, `mutate()`, `rename()`
+-   `stringr`: `str_wrap()`
+-   `purrr`: 
+-   `ggplot2`: `geom_polygon()`, `facet_wrap()`
