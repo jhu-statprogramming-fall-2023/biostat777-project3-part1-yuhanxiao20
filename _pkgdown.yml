@@ -10,7 +10,7 @@ development:
 
 navbar:
   structure:
-    left:  [reference, articles, tutorials]
+    left:  [reference, articles]
     right: [search, github]
 
 home:

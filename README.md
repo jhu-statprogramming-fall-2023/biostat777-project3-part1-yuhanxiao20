@@ -1,10 +1,33 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+## Information
+
+Author: Yuhan Xiao (website and example data analysis)
+
+URL to the GitHub link to where the original R package came from:
+<https://github.com/bbc/bbplot>.
+
+URL to the deployed website:
+<https://jhu-statprogramming-fall-2023.github.io/biostat777-project3-part1-yuhanxiao20/>.
+
+Description of the 5 customized things in this pkgdown website:
+
+1.  I used `bootswatch` to set up a theme - simplex - for `bootstrap`.
+2.  I used `bslib` to customize the height of the navigation bar to
+    100px.
+3.  I set up development `mode` to auto.
+4.  I used sidebar `structure` to add a GitHub link next to the search
+    box.
+5.  I used author `href` to add email links to author names.
+
 ## BBPLOT
 
 <!-- badges: start -->
 <!-- badges: end -->
+
+Original author: Nassos Stylianou, Clara Guibourg, Will Dahlgreen,
+Robert Cuffe, Tom. Calver, Ransome Mpini.
 
 This repo contains the functions of the `bbplot` package, which once
 installed locally, provides helpful functions for creating and exporting

@@ -20,7 +20,7 @@ Imports:
     dplyr,
     data.table
 License: GPL-2
-URL: https://yuhanx.com/bbplot/, https://github.com/yuhanxiao20/bbplot
+URL: https://jhu-statprogramming-fall-2023.github.io/biostat777-project3-part1-yuhanxiao20/, https://github.com/jhu-statprogramming-fall-2023/biostat777-project3-part1-yuhanxiao20
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.3
@@ -29,10 +29,8 @@ VignetteBuilder: knitr
 Suggests: 
     knitr,
     rmarkdown,
-    ggplot2,
     here,
     readr,
     tidyverse,
-    dplyr,
     maps,
     purrr
