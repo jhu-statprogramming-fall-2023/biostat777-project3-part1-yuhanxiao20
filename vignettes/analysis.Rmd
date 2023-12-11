@@ -132,6 +132,10 @@ map_salary_st_avg %>% ggplot() +
         text = element_text(family = "Times"))
 ```
 
+::: {.callout-note}
+* Note: 48 states and District of Columbia (D.C.) are included in this map. Alaska and Hawaii are not included in this map.
+::: 
+
 ```{r fig.dim = c(8,6)}
 # plot the association between average early career pay to average mid career pay
 pay_trend_plot <- pay_trend %>% 
