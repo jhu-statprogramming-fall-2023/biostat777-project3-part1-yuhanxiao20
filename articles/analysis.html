@@ -85,8 +85,10 @@ college students. The goal here is to demonstrate the functions from the
 R package <code>bbplot</code> and wrangle and plot the example data from
 TidyTuesday.</p>
 <ul>
-<li><p>Question: How does the early career pay differ across the
-U.S.?</p></li>
+<li><p>Question: How does the early career pay differ across the U.S.?
+What is the relationship between early career pay and mid career pay?
+What is the relationship between early career pay and STEM percent of
+student body?</p></li>
 <li><p>Audience: R package <code>bbplot</code> users who are interested
 in seeing example data wrangling and visualizations.</p></li>
 <li><p>Dataset: I obtained the original dataset from <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2020/2020-03-10" class="external-link">TidyTuesday</a>.</p></li>
@@ -229,6 +231,7 @@ dictionary</a> from TidyTuesday.</p></li>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span><span class="st">"The Association Between Average Estimated Early Career Salary and Mid Career Salary by State"</span>, <span class="fl">30</span><span class="op">)</span>, subtitle <span class="op">=</span> <span class="fu"><a href="https://stringr.tidyverse.org/reference/str_wrap.html" class="external-link">str_wrap</a></span><span class="op">(</span><span class="st">"A higher early career salary is associated with a higher mid career salary"</span>, <span class="fl">40</span><span class="op">)</span>, x <span class="op">=</span> <span class="st">"average early career salary"</span>, y <span class="op">=</span> <span class="st">"average mid career salary"</span>, caption <span class="op">=</span> <span class="st">"Yuhan Xiao"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="../reference/bbc_style.html">bbc_style</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span></span>
+<span><span class="co"># save the plot to local folder</span></span>
 <span><span class="fu"><a href="../reference/finalise_plot.html">finalise_plot</a></span><span class="op">(</span>plot_name <span class="op">=</span> <span class="va">pay_trend_plot</span>,</span>
 <span>  source <span class="op">=</span> <span class="st">"Source: TidyTuesday"</span>,</span>
 <span>  save_filepath <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span>,<span class="st">"pay_trend-nc.png"</span><span class="op">)</span>,</span>
