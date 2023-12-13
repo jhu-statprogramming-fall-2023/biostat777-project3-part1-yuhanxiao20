@@ -132,9 +132,7 @@ map_salary_st_avg %>% ggplot() +
         text = element_text(family = "Times"))
 ```
 
-::: {.callout-note}
 * Note: 48 states and District of Columbia (D.C.) are included in this map. Alaska and Hawaii are not included in this map.
-::: 
 
 ```{r fig.dim = c(8,6)}
 # plot the association between average early career pay to average mid career pay
@@ -153,9 +151,7 @@ finalise_plot(plot_name = pay_trend_plot,
   logo_image_path = here("data","placeholder.png"))
 ```
 
-::: {.callout-note}
 * Note: I have added captions and axis labels. This plot, however, does not show these components because it follows the BBC style.
-:::
 
 ```{r warning = F, message = F, fig.dim = c(8,6)}
 pay_stem_trend %>% ggplot(aes(x=stem_percent, y = early_career_pay, color = state)) +
@@ -178,7 +174,7 @@ Colleges have higher estimated early career salary for students if they are loca
 
 ## Functions
 -   `bbplot`: `bbc_style()`, `finalise_plot()`
--   `dplyr`: `select()`, `group_by()`, `summarise()`, `mutate()`, `rename()`, `filter()`
+-   `dplyr`: `select()`, `group_by()`, `summarise()`, `mutate()`, `rename()`, `filter()`, `left_join()`, `join_by()`
 -   `stringr`: `str_wrap()`
 -   `purrr`: `map_dbl()`, `map_chr()`, `map_int()`
 -   `ggplot2`: `geom_polygon()`, `geom_point()`, `geom_smooth()`, `facet_wrap()`
